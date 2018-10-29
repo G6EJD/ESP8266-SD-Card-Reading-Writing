@@ -74,7 +74,7 @@ void loop() {
   //-------------------------------------------------------------------------------
   // SD.exists(filename) returns TRUE is found the name of the file to test for existence, which can include directories (delimited by forward-slashes, /) 
   Serial.println("Look for a file called 'testfile.txt', if found remove it");
-  if (SD.exists("testdata.txt")); {
+  if (SD.exists("testdata.txt")) {
     Serial.println("File testfile.txt found");
     if (SD.remove("testdata.txt")) Serial.println("File successfully deleted"); else Serial.println("Error - file not deleted");
   }
