@@ -74,12 +74,19 @@ void loop() {
   //-------------------------------------------------------------------------------
   // SD.exists(filename) returns TRUE is found the name of the file to test for existence, which can include directories (delimited by forward-slashes, /) 
   Serial.println("Look for a file called 'testfile.txt', if found remove it");
-  if (SD.exists("testdata.txt")) {
+  if (SD.exists("testfile.txt")) {
     Serial.println("File testfile.txt found");
-    if (SD.remove("testdata.txt")) Serial.println("File successfully deleted"); else Serial.println("Error - file not deleted");
-  }
-  if (!SD.exists("testdata.txt")); {
-    Serial.println("Following confirmation checks, 'testfile.txt' now deleted\r\n");
+    if (SD.remove("testfile.txt")) {
+      Serial.println("File successfully deleted");
+    } else {
+      Serial.println("Error - file not deleted");
+    }
+   
+    if (!SD.exists("testfile.txt")); {
+      Serial.println("Following confirmation checks, 'testfile.txt' now deleted");
+    }
+  } else {
+    Serial.println("File 'testfile.txt' not found");
   }
   root = SD.open("/");
   root.rewindDirectory();
@@ -89,7 +96,7 @@ void loop() {
   //-------------------------------------------------------------------------------
   // SD.open(filename,OPEN_READ|OPEN_WRITE) SD.open(filename) defaults to OPEN_READ
   Serial.println("Open a new file called 'testfile.txt' and write 1 to 5 to it");
-  File testfile = SD.open("testdata.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file, returns 0 if not available
+  File testfile = SD.open("testfile.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file, returns 0 if not available
   if (testfile) {
     for (int entry = 0; entry <= 5; entry = entry + 1) {
       testfile.print(entry);
@@ -101,7 +108,7 @@ void loop() {
   Serial.flush(); Serial.begin(9600); while(!Serial.available());
   //-------------------------------------------------------------------------------
   Serial.println("Open a file called 'testfile.txt' and read the data from it");
-  testfile = SD.open("testdata.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
+  testfile = SD.open("testfile.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
   while (testfile.available()) {
     Serial.write(testfile.read());
   }
@@ -111,7 +118,7 @@ void loop() {
   Serial.flush(); Serial.begin(9600); while(!Serial.available());
   //-------------------------------------------------------------------------------
   Serial.println("Open a file called 'testfile.txt' and append 5 downto 1 to it");
-  testfile = SD.open("testdata.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file
+  testfile = SD.open("testfile.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file
   for (int entry = 5; entry >= 0; entry = entry - 1) {
     testfile.print(entry);
     Serial.print(entry);
@@ -121,7 +128,7 @@ void loop() {
   Serial.flush(); Serial.begin(9600); while(!Serial.available());
   //-------------------------------------------------------------------------------
   Serial.println("Open a file called 'testfile.txt' and read it");
-  testfile = SD.open("testdata.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
+  testfile = SD.open("testfile.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
   while (testfile.available()) {
     Serial.write(testfile.read());
   }
@@ -132,7 +139,7 @@ void loop() {
   //012345543210
   //-------------------------------------------------------------------------------
   Serial.println("\r\nOpen a file called 'testfile.txt' and move to position 8 in the file then print the data (should be 3)");
-  testfile = SD.open("testdata.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
+  testfile = SD.open("testfile.txt", FILE_READ); // FILE_WRITE opens file for writing and moves to the end of the file
   Serial.print("Data at file location (8): ");
   testfile.seek(8);
   Serial.write(testfile.read());
@@ -154,7 +161,7 @@ void loop() {
   Serial.flush(); Serial.begin(9600); while(!Serial.available());
   //-------------------------------------------------------------------------------
   Serial.println("\r\nOpen a file called 'testfile.txt' and write some data records");
-  testfile = SD.open("testdata.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file
+  testfile = SD.open("testfile.txt", FILE_WRITE); // FILE_WRITE opens file for writing and moves to the end of the file
   int hours = 10;
   int mins  = 00;
   String names = "Mr Another";
